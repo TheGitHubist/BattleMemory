@@ -23,10 +23,13 @@ public class Card extends JPanel {
         this.joker = joker;
         this.side = "Hidden";
         this.matched = false; // Initialize matched flag to false
+        images = new ArrayList<>();
 
         // Load the hidden image
         try {
             hiddenImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("cardTurn.jpg")));
+
+            images.add(ImageIO.read(Objects.requireNonNull(getClass().getResource("Joker.jpg"))));
 
             images.add(ImageIO.read(Objects.requireNonNull(getClass().getResource("OwnBonusGreen.jpg"))));
             images.add(ImageIO.read(Objects.requireNonNull(getClass().getResource("bigBonusGreen.jpg"))));
@@ -46,6 +49,11 @@ public class Card extends JPanel {
         // Set preferred size of the panel to match the size of the image
         if (hiddenImage != null) {
             setPreferredSize(new Dimension(hiddenImage.getWidth(), hiddenImage.getHeight()));
+        }
+        for (BufferedImage image : images) {
+            if (image != null) {
+                setPreferredSize(new Dimension(image.getWidth(), image.getHeight()));
+            }
         }
 
         // Add mouse listener to handle clicks
@@ -85,22 +93,22 @@ public class Card extends JPanel {
         this.matched = matched;
     }
 
-    private Color getColor() {
+    private int getLink() {
         return switch (this.change) {
             //JOKER
-            case 0 -> Color.gray;
+            case 0 -> 0;
             //BONUS for player
-            case 50 -> Color.green;
-            case 2000 -> Color.yellow;
+            case 50 -> 1;
+            case 2000 -> 2;
             //MALUS for player
-            case -100 -> Color.magenta;
-            case -3000 -> Color.pink;
+            case -100 -> 3;
+            case -3000 -> 4;
             //BONUS for the opponent
-            case 101 -> Color.cyan;
-            case 3000 -> Color.blue;
+            case 101 -> 5;
+            case 3000 -> 6;
             //MALUS for the opponent
-            case -51 -> Color.orange;
-            default -> Color.red;
+            case -51 -> 7;
+            default -> 8;
         };
     }
 
@@ -126,9 +134,11 @@ public class Card extends JPanel {
                 g.drawImage(hiddenImage, 0, 0, getWidth(), getHeight(), this);
             }
         } else {
-            // If side is visible, draw a colored rectangle
-            g.setColor(getColor());
-            g.fillRect(0, 0, getWidth(), getHeight());
+            // If side is visible, draw the corresponding image
+            BufferedImage image = images.get(getLink()); // Adjust based on the range of change values
+            if (image != null) {
+                g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+            }
         }
     }
 }
