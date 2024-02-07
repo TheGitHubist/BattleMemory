@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class GameHandler extends JFrame {
     private Card firstFlippedCard;
@@ -210,11 +211,42 @@ public class GameHandler extends JFrame {
         if (!hasMatched) {
             currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
             System.out.println("Player " + (currentPlayerIndex + 1) + "'s turn");
+            animateRandomLine();
         } else {
             System.out.println("Player " + (currentPlayerIndex + 1) + "'s turn");
         }
         firstFlippedCard = null;
         secondFlippedCard = null;
         hasMatched = false;
+    }
+
+    private void animateRandomLine() {
+        Random random = new Random();
+        int row = random.nextInt(4); // Randomly select a row (0 to 3)
+        animateRow(row);
+    }
+
+    private void animateRow(int row) {
+        int cardHeight = allCards.get(0).getHeight();
+        int startY = row * cardHeight; // Starting Y position of the row
+        for (int i = 0; i < 5 / 2; i++) {
+            int index1 = row * 5 + i;
+            int index2 = row * 5 + (4 - i);
+            int startX1 = allCards.get(index1).getX();
+            int startX2 = allCards.get(index2).getX();
+            for (int x = 0; x <= cardHeight; x += 10) {
+                allCards.get(index1).setLocation(startX1 + x, startY);
+                allCards.get(index2).setLocation(startX2 - x, startY);
+                try {
+                    Thread.sleep(20); // Adjust speed of animation as needed
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            allCards.get(index1).setLocation(startX2, startY);
+            allCards.get(index2).setLocation(startX1, startY);
+            Collections.swap(allCards, index1, index2); // Swap the cards in the list
+            this.repaint();
+        }
     }
 }
