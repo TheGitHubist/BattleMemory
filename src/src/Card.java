@@ -31,17 +31,17 @@ public class Card extends JPanel {
 
             images.add(ImageIO.read(Objects.requireNonNull(getClass().getResource("Joker.jpg"))));
 
-            images.add(ImageIO.read(Objects.requireNonNull(getClass().getResource("OwnBonusGreen.jpg"))));
-            images.add(ImageIO.read(Objects.requireNonNull(getClass().getResource("bigBonusGreen.jpg"))));
+            images.add(ImageIO.read(Objects.requireNonNull(getClass().getResource("OwnBonusGreen.png"))));
+            images.add(ImageIO.read(Objects.requireNonNull(getClass().getResource("bigBonusGreen.png"))));
 
-            images.add(ImageIO.read(Objects.requireNonNull(getClass().getResource("OwnBonusBlue.jpg"))));
-            images.add(ImageIO.read(Objects.requireNonNull(getClass().getResource("bigBonusBlue.jpg"))));
+            images.add(ImageIO.read(Objects.requireNonNull(getClass().getResource("OwnBonusBlue.png"))));
+            images.add(ImageIO.read(Objects.requireNonNull(getClass().getResource("bigBonusBlue.png"))));
 
-            images.add(ImageIO.read(Objects.requireNonNull(getClass().getResource("OwnBonusYellow.jpg"))));
-            images.add(ImageIO.read(Objects.requireNonNull(getClass().getResource("bigBonusYellow.jpg"))));
+            images.add(ImageIO.read(Objects.requireNonNull(getClass().getResource("OwnBonusYellow.png"))));
+            images.add(ImageIO.read(Objects.requireNonNull(getClass().getResource("bigBonusYellow.png"))));
 
-            images.add(ImageIO.read(Objects.requireNonNull(getClass().getResource("OwnBonusRed.jpg"))));
-            images.add(ImageIO.read(Objects.requireNonNull(getClass().getResource("bigBonusRed.jpg"))));
+            images.add(ImageIO.read(Objects.requireNonNull(getClass().getResource("OwnBonusRed.png"))));
+            images.add(ImageIO.read(Objects.requireNonNull(getClass().getResource("bigBonusRed.png"))));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -101,11 +101,11 @@ public class Card extends JPanel {
             case 50 -> 1;
             case 2000 -> 2;
             //MALUS for player
-            case -100 -> 3;
-            case -3000 -> 4;
+            case -100 -> 5;
+            case -3000 -> 6;
             //BONUS for the opponent
-            case 101 -> 5;
-            case 3000 -> 6;
+            case 101 -> 3;
+            case 3000 -> 4;
             //MALUS for the opponent
             case -51 -> 7;
             default -> 8;
